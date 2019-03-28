@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<p style="font"></p>
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <table class="table table-bordered">
+                <thead>
+                <tr class="warning">
+                    <th>
+                        订单id
+                    </th>
+                    <th>
+                        姓名
+                    </th>
+                    <th>
+                        手机号
+                    </th>
+                    <th>
+                        地址
+                    </th>
+                    <th>金额</th>
+                    <th>订单状态</th>
+                    <th>支付状态</th>
+                    <th>创建时间</th>
+                    <th colspan="2">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="o : ${orderDtoList.list}" th:class="${oStat.even}? 'info'">
+                    <td th:text="${o.orderId}">13 jan 2011</td>
+                    <td th:text="${o.buyerName}">13 jan 2011</td>
+                    <td th:text="${o.buyerPhone}">13 jan 2011</td>
+                    <td th:text="${o.buyerAddress}">13 jan 2011</td>
+                    <td th:text="${o.orderAmount}">13 jan 2011</td>
+                    <td th:text="${o.orderStatusEnum}">13 jan 2011</td>
+                    <td th:text="${o.payStatusEnum}">13 jan 2011</td>
+                    <td th:text="${#calendars.format(o.createTime,'yyyy/MM/dd')}">13 jan 2011</td>
+                    <td>
+                        <a th:href="@{'/seller/order/detail/'+${o.orderId}}">详情</a>
+                    </td>
+                    <td>
+                        <a th:if="${o.orderStatus=='0'}" th:href="@{'/seller/order/cancel/'+${o.orderId}}">取消</a>
+                    </td>
+                    <!--<td th:text="${o.customer.name}">Frederic Tomato</td>-->
+                    <!--<td th:text="${#aggregates.sum(o.orderLines.{purchasePrice * amount})}">23.32</td>-->
+                    <!--<td>-->
+                        <!--<a href="details.html" th:href="@{/order/details(orderId=${o.id})}">view</a>-->
+                    <!--</td>-->
+                </tr>
+
+                </tbody>
+            </table>
+            <ul class="pagination pull-right">
+                <li th:if="${orderDtoList.hasPreviousPage == false}" class="disabled">
+                    <a href="#">上一页</a>
+                </li>
+                <li th:if="${orderDtoList.hasPreviousPage == true}?disabled">
+                    <a th:href="@{'/seller/order/list?pageNum='+${orderDtoList.pageNum-1}+'&pageSize='+${orderDtoList.pageSize}}">上一页</a>
+                </li>
+                <li th:each="o : ${orderDtoList.navigatepageNums}" th:class="${o == orderDtoList.pageNum}?disabled">
+                    <a th:href="@{'#'}" th:text="${o}" th:if="${o == orderDtoList.pageNum}">1</a>
+                    <a th:href="@{'/seller/order/list?pageNum='+${o}+'&pageSize='+${orderDtoList.pageSize}}" th:text="${o}" th:if="${o != orderDtoList.pageNum}">1</a>
+                </li>
+                <li th:class="${orderDtoList.hasNextPage == false}?disabled">
+                    <a th:href="@{'/seller/order/list?pageNum='+${orderDtoList.pageNum+1}+'&pageSize='+${orderDtoList.pageSize}}" th:if="${orderDtoList.hasNextPage == true}">下一页</a>
+                    <a th:href="@{'#'}" th:if="${orderDtoList.hasNextPage == false}">下一页</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>

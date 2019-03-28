@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<!-- 原生MGB配置 -->
+<generatorConfiguration>
+
+    <context id="DB2Tables" targetRuntime="MyBatis3Simple"  defaultModelType="flat">
+
+        <property name="useMapperCommentGenerator" value="false"/>
+        <property name="javaFileEncoding" value="UTF-8"/>
+
+        <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+            <property name="mappers" value="tk.mybatis.mapper.common.Mapper"/>
+            <property name="caseSensitive" value="true"/>
+            <property name="forceAnnotation" value="true"/>
+            <property name="beginningDelimiter" value="`"/>
+            <property name="endingDelimiter" value="`"/>
+        </plugin>
+
+        <!--通用代码生成器插件-->
+        <!--生成mapper接口-->
+        <plugin type="tk.mybatis.mapper.generator.TemplateFilePlugin">
+            <property name="targetProject" value="./src/main/java"/>
+            <property name="targetPackage" value="com.lvlivejp.foodsell.mapper"/>
+            <property name="templatePath" value="generator/mapper.ftl"/>
+            <property name="mapperSuffix" value="Mapper"/>
+            <property name="fileName" value="${tableClass.shortClassName}${mapperSuffix}.java"/>
+        </plugin>
+        <!--mapper.xml-->
+        <plugin type="tk.mybatis.mapper.generator.TemplateFilePlugin">
+            <property name="targetProject" value="./src/main/resources"/>
+            <property name="targetPackage" value="mappers"/>
+            <property name="mapperPackage" value="com.lvlivejp.foodsell.mapper"/>
+            <property name="templatePath" value="generator/mapperXml.ftl"/>
+            <property name="mapperSuffix" value="Mapper"/>
+            <property name="fileName" value="${tableClass.shortClassName}${mapperSuffix}.xml"/>
+        </plugin>
+
+        <!--注释生成器-->
+        <commentGenerator type="tk.mybatis.mapper.generator.MapperCommentGenerator">
+        </commentGenerator>
+
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://lvlivejp.synology.me:3306/foodsell"
+                        userId="root"
+                        password="123456">
+        </jdbcConnection>
+
+        <!--<javaTypeResolver >-->
+            <!--<property name="forceBigDecimals" value="false" />-->
+        <!--</javaTypeResolver>-->
+
+        <javaModelGenerator targetPackage="com.lvlivejp.foodsell.model" targetProject=".\src\main\java">
+            <!--<property name="enableSubPackages" value="true" />-->
+            <!--<property name="trimStrings" value="true" />-->
+        </javaModelGenerator>
+
+        <!--<sqlMapGenerator targetPackage="mapper"  targetProject=".\src\main\resources">-->
+            <!--<property name="enableSubPackages" value="true" />-->
+        <!--</sqlMapGenerator>-->
+
+        <!--<javaClientGenerator type="XMLMAPPER" targetPackage="com.lvlivejp.foodsell.dao"  targetProject=".\src\main\java">-->
+            <!--<property name="enableSubPackages" value="true" />-->
+        <!--</javaClientGenerator>-->
+
+        <table tableName="t_order" domainObjectName="Order" >
+        </table>
+        <table tableName="t_order_detail" domainObjectName="OrderDetail" >
+        </table>
+        <table tableName="t_product_category" domainObjectName="ProductCategory" >
+            <generatedKey column="category_id" sqlStatement="JDBC" identity="true" />
+        </table>
+        <table tableName="t_product_info" domainObjectName="ProductInfo" >
+            <generatedKey column="product_id" sqlStatement="JDBC" identity="true" />
+        </table>
+
+    </context>
+</generatorConfiguration>

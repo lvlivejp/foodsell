@@ -1,0 +1,54 @@
+spring:
+  datasource:
+    username: root
+    password: 123456
+    url: jdbc:mysql://lvlivejp.synology.me:3306/foodsell
+  thymeleaf:
+    cache: false
+  redis:
+    host: 123.56.41.25
+    password: re12dis
+    database: 1
+  rabbitmq:
+    host: 140.82.6.25
+    port: 5672
+#logback.xml中配置
+#logging:
+#  level:
+#    #Mybatis打印Sql语句日志
+#    com.lvlivejp.foodsell.mapper: debug
+
+#如果只用通用mapper自带API查询数据无需以下配置
+#如果有自己写的sql，需要以下配置
+mybatis:
+  #xml文件所在的目录
+  mapper-locations: classpath:mappers/*.xml
+  #Model类所在的包名,mapper.xml中的resultType可以直接写类名，不区分大小写
+  type-aliases-package: com.lvlivejp.foodsell.model
+  configuration:
+    #是否启用驼峰命名转换
+    map-underscore-to-camel-case: true
+
+#mapper:
+mapper:
+  #字段值为空时，不作为条件
+  not-empty: true
+#  mappers:
+#  - tk.mybatis.mapper.common.Mapper
+
+foodsell:
+  session-timeout: 3600
+  redis-read-timeout: 600
+
+server:
+  context-path: /sell
+
+wechat:
+  mp-app-id: wxe5dbdb2f3116ef9f
+  mp-app-secret: 56235aad644ddfea0b31ec41c8d42ab7
+
+pagehelper:
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
+  helper-dialect: mysql

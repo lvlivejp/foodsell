@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-6 column">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>
+                        订单ID
+                    </th>
+                    <th>
+                        订单总金额
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
+                        [[${orderDto.orderId}]]
+                    </td>
+                    <td>
+                        [[${orderDto.orderAmount}]]元
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-12 column">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>
+                        id
+                    </th>
+                    <th>
+                        名称
+                    </th>
+                    <th>
+                        价格
+                    </th>
+                    <th>
+                        数量
+                    </th>
+                    <th>
+                        总额
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="o: ${orderDto.orderDetailDtos}">
+                    <td>
+                        [[${o.orderDetailId}]]
+                    </td>
+                    <td>
+                        [[${o.productName}]]
+                    </td>
+                    <td>
+                        [[${o.productPrice}]]
+                    </td>
+                    <td>
+                        [[${o.productQuantity}]]
+                    </td>
+                    <td>
+                        [[${o.productPrice * o.productQuantity}]]
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-12 column">
+            <a class="btn btn-default btn-success" th:if="${orderDto.orderStatus=='0'}" th:href="@{'/seller/order/finish/'+${orderDto.orderId}}">完成</a>
+            <a class="btn btn-danger btn-default" th:if="${orderDto.orderStatus=='0'}" th:href="@{'/seller/order/cancel/'+${orderDto.orderId}}">取消</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
